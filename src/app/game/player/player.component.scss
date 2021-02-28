@@ -1,0 +1,33 @@
+.cadre {
+    background-color: blue;
+    text-align: center;
+    width: 80%;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 1.8%;
+    display: flex;
+}
+
+.playButton {
+    background-color: yellowgreen;
+    color: white;
+    font-size: 25px;
+    padding: 8px 20px;
+    border-radius: 40px;
+}
+
+.rulesButton {
+    background-color: darkred;
+    color: white;
+    font-size: 25px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-right: 12px;
+}
+
+.elements { 
+    margin: auto;
+    
+}
+
+

@@ -1,0 +1,27 @@
+//test scss NE MARHCE PAS 
+$color: red; 
+
+@mixin span {
+    color: $color; 
+}
+//fin du test scss 
+
+.toolbar {
+    background-color: blue;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    line-height: 90px;
+    justify-content: center;
+    display: flex;
+}
+
+.title {
+    color: yellow;
+    font-family: fantasy;
+    font-size: 40px;
+    margin: 0 auto;
+}
+

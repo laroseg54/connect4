@@ -1,0 +1,86 @@
+<!-- Formulaire pour les joueurs -->
+<div class="cadre">
+
+    <!-- Player 1-->
+    <div class="elements">
+
+        <form [formGroup]="playerForm" (ngSubmit)="submitForm()"> 
+
+
+            <mat-form-field appearance="legacy"> <!-- mat-form-field can contains : <input matNativeControl> & <textarea matNativeControl> ; 
+                                                    <select matNativeControl> ; <mat-select> ; <mat-chip-list> -->
+                                                    <!-- appearance can take : legacy, fill or outline -->
+            <mat-label>Enter player1's pseudo</mat-label> <!-- for floating label -->
+            <input matNativeControl formControlName="pseudo1">
+            </mat-form-field>
+
+        <br>
+
+            <mat-form-field appearance="legacy">
+                <mat-label>Pawn's Color</mat-label>
+                <mat-select formControlName="color1">   
+                <mat-option value="red">Red</mat-option>
+                <mat-option value="yellow">Yellow</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        <br>
+
+    <!-- Player 2-->
+            <mat-form-field appearance="legacy"> <!-- mat-form-field can contains : <input matNativeControl> & <textarea matNativeControl> ; 
+                                                    <select matNativeControl> ; <mat-select> ; <mat-chip-list> -->
+                                                    <!-- appearance can take : legacy, fill or outline -->
+            <mat-label>Enter player2's pseudo</mat-label> <!-- for floating label -->
+            <input matNativeControl formControlName="pseudo2">
+            </mat-form-field>
+
+        <br> 
+            <!-- le player 2 prend la couleur inverse au player 1 -->
+            <mat-form-field appearance="legacy">
+                <mat-label>Pawn's Color</mat-label>
+                <mat-select formControlName="color2">   
+                <mat-option value="red" *ngIf="playerForm.value.color1 == 'yellow'">Red</mat-option>
+                <mat-option value="yellow" *ngIf="playerForm.value.color1 == 'red'">Yellow</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        <br>
+
+
+
+            <button class="rulesButton" [routerLink]="['/rules']" mat-raised-button>Rules</button>
+            <button type="button" class="playButton" [routerLink]="['/grid']" mat-raised-button (click)="submitForm()">Play !</button>
+            <!--<button type="button" class="playButton" mat-raised-button (click)="submitForm()">Play !</button>-->
+
+
+            <!-- Test MatDialog 
+            <button mat-raised-button (click)="openDialog()">Open Dialog</button>
+            --> 
+        
+        </form>
+
+
+        <!-- test -->
+       <!-- <h1>{{ playerForm.value.pseudo }}</h1>
+        <h2>{{ playerForm.value.color }}</h2>
+
+        <h3>Ceci est dans Player Component <ng-content></ng-content></h3> -->
+
+       <!--<app-grid>Bonjour</app-grid> -->
+
+  
+        <!--h1>test 1</h1>
+   
+        <input type="text" class="form-control" [(ngModel)]="playerForm.value.pseudo">
+        <h4>Player : {{ playerForm.value.pseudo }}</h4>--> 
+      
+        <!--<h2>test 2</h2>
+        <app-grid (childEvent)="message=$event" [parentData]="name"> </app-grid>
+        <h1>{{ message }}</h1>-->
+    
+
+
+
+    </div>
+
+</div>

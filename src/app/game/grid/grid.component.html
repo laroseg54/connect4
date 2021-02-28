@@ -1,0 +1,30 @@
+<!--<h2>{{"Hello " + name }}</h2>
+<button (click)="fireEvent()">Send Event</button>--> 
+
+<div class="background">
+    <!-- MatDialog 
+    <div class="text">
+        <h2 mat-dialog-title>Game</h2>
+        <mat-dialog-content>content</mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close>Restart !</button>
+        </mat-dialog-actions>
+
+    </div> -->
+
+    <div class="grid">
+        <table>
+            <tr *ngFor="let ligne of grille; let i = index">
+                  <app-case click="poserPion" *ngFor="let case of ligne; let j = index"></app-case>
+               
+            </tr>
+        </table>
+    </div>
+
+    <br>
+
+    <div class="restart">
+        <button class="restartButton" mat-raised-button>Play again !</button>
+    </div>
+    
+</div>

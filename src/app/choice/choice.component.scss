@@ -1,0 +1,101 @@
+.choice {
+    background-color: blue;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 1.8%;
+    height: 50%;
+    display: flex;
+}
+
+.elements {
+  margin: auto;
+}
+//BUTON START NEW GAME
+#startgame {
+    background-color: yellow;
+    color: red;
+    font-size: 25px;
+    padding: 10px 24px;
+    border-radius: 40px;
+}
+
+#startgame:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: red;
+    color: yellow;
+}
+
+#startgame span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+#startgame span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+#startgame:hover span {
+    padding-right: 25px;
+  }
+  
+#startgame:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+#startgame:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+//BUTON RULES
+#rules {
+    background-color: darkred;
+    color: yellow;
+    font-size: 25px;
+    padding: 10px 24px;
+    border-radius: 40px;
+}
+#rules:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: yellow;
+    color: red;
+}
+
+#rules span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+#rules span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+#rules:hover span {
+    padding-right: 25px;
+  }
+  
+#rules:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+#rules:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
