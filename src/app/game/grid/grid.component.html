@@ -15,8 +15,7 @@
     <div class="grid">
         <table>
             <tr *ngFor="let ligne of grille; let i = index">
-                  <app-case click="poserPion" *ngFor="let case of ligne; let j = index"></app-case>
-               
+                  <app-case   *ngFor="let case of ligne; let j = index" [data]="case"  ></app-case>
             </tr>
         </table>
     </div>
@@ -25,6 +24,9 @@
 
     <div class="restart">
         <button class="restartButton" mat-raised-button>Play again !</button>
+    </div>
+    <div *ngIf="infos.terminee">
+        <p>Partie terminée, le gagnant est {{infos.gagnant}}</p>
     </div>
     
 </div>

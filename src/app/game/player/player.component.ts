@@ -3,6 +3,9 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 //MatDialog
 import { MatDialog } from '@angular/material/dialog'; 
+import { PlayerService } from 'src/app/services/player.service';
+import { JeuInfos } from 'src/DataTypes/jeu-infos';
+import { PlayersInfos } from 'src/DataTypes/players-infos';
 import { GridComponent } from '../grid/grid.component';
 
 
@@ -29,10 +32,12 @@ export class PlayerComponent implements OnInit {
 
   //
   public name = "Sisi";
-  public message = "";  
-
+  public message = ""; 
+  public infos : JeuInfos;
   //MatDialog
-  constructor(private fb : FormBuilder, public dialog: MatDialog) { }
+  constructor(private fb : FormBuilder, public dialog: MatDialog,playerService: PlayerService) {
+       playerService.getJeuSubjectDataObservable().subscribe(infos => this.infos = infos );
+   }
 
   /*MatDialog 
   openDialog() {
@@ -44,16 +49,13 @@ export class PlayerComponent implements OnInit {
   }
 
   initializeForm(): void {
-    this.playerForm = this.fb.group({
-       pseudo1: '',
-       color1: '',
-       pseudo2: '',
-       color2: ''
-    });
+    this.playerForm = this.fb.group(this.infos.players);
   }
 
   submitForm() { 
    console.log(this.playerForm.value);  
+   this.infos.players = this.playerForm.value;
+   
   }
 
 } 

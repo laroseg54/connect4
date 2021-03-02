@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CaseComponent } from '../case/case.component';
+import { PlayerService } from 'src/app/services/player.service';
+import { CaseData } from 'src/DataTypes/case-data';
+import { JeuInfos } from 'src/DataTypes/jeu-infos';
+
+
+
 //import EventEmitter = require('events');
 
 @Component({
@@ -16,30 +21,29 @@ import { CaseComponent } from '../case/case.component';
 
 export class GridComponent implements OnInit {
 
-
+   
   public taille = 7;
   public hauteur = 6;
-  public grille : String[][] = [];
+  public infos : JeuInfos;
+
 
   @Input('parentData') public name:string; 
   @Output() public childEvent = new EventEmitter(); 
 
-  constructor() { }
+  constructor(private playerService : PlayerService) {
+    playerService.getJeuSubjectDataObservable().subscribe(infos => this.infos = infos );
+    playerService.initializeTable(this.hauteur,this.taille);
+   }
 
+  get grille() : CaseData[][]{
+    return this.playerService.grille;
+  }
   ngOnInit(): void {
     console.log("parentData vaut " + this.name);
-    this.initializeTable();
+  ;
   }
 
-  initializeTable(this:GridComponent){
-      for(let i=0;i<this.hauteur;i++){
-        this.grille.push(new Array<String>(7))
-        for(let j=0;j<this.taille;j++){
-          this.grille[i][j] = "white";
-      }
-    }
-  }
-
+ 
   /*
   fireEvent() {
     this.childEvent.emit('Hey Codevolution');

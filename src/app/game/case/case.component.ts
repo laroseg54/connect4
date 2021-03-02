@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { PlayerService } from 'src/app/services/player.service';
+import { CaseData } from 'src/DataTypes/case-data';
+
 
 @Component({
   selector: 'app-case',
@@ -7,19 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CaseComponent implements OnInit {
 
-  constructor() { 
-
-    this.color = "white";
+  constructor(private playerService : PlayerService) { 
   }
 
-  public color : "red"|"yellow"|"white";
+  @Input() data : CaseData;
+ 
+
 
   ngOnInit(): void {
   }
 
   poserPion(){
-
-    this.color="red";
+    this.playerService.placerPion(this.data);
   }
 
 }
