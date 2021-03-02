@@ -40,7 +40,11 @@ export class GridComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log("parentData vaut " + this.name);
-  ;
+  }
+
+  restart(){
+
+    this.playerService.restart();
   }
 
  

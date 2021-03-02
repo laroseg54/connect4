@@ -23,7 +23,7 @@
     <br>
 
     <div class="restart">
-        <button class="restartButton" mat-raised-button>Play again !</button>
+        <button class="restartButton" (click)="restart()" mat-raised-button>Play again !</button>
     </div>
     <div *ngIf="infos.terminee">
         <p>Partie terminée, le gagnant est {{infos.gagnant}}</p>
