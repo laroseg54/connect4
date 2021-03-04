@@ -14,19 +14,27 @@
 
     <div class="grid">
         <table>
-            <tr *ngFor="let ligne of grille; let i = index">
+            <tr  *ngFor="let ligne of grille; let i = index" >
                   <app-case   *ngFor="let case of ligne; let j = index" [data]="case"  ></app-case>
             </tr>
         </table>
     </div>
-
+  <!--   <div class="grid">
+        <svg width="100%" height="100% " viewbox="0,0,400,400">
+            <rect *ngFor="let ligne of grille; let i = index" [attr.x]="i*(400/taille)" y="0" [attr.width]="400/taille" height="400" fill="blue" />
+        </svg>
+    </div>
+ -->
     <br>
 
     <div class="restart">
         <button class="restartButton" (click)="restart()" mat-raised-button>Play again !</button>
     </div>
-    <div *ngIf="infos.terminee">
+    <div *ngIf="infos.terminee && infos.gagnant!=='egalite'">
         <p>Partie terminée, le gagnant est {{infos.gagnant}}</p>
+    </div>
+    <div *ngIf="infos.terminee && infos.gagnant==='egalite'">
+        <p>Partie terminée, il y a egalite entre les deux joueurs</p>
     </div>
     
 </div>

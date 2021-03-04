@@ -5,4 +5,5 @@ export interface JeuInfos {
     gagnant : string;
     terminee : boolean;
     players : PlayersInfos
+    nbrPions : number;
 }

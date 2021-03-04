@@ -6,6 +6,7 @@ import { PlayersInfos } from 'src/DataTypes/players-infos';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,8 @@ export class PlayerService {
       color1: '',
       pseudo2: '',
       color2: ''
-    }
+    },
+    nbrPions : 42
   });
 
 
@@ -32,7 +34,7 @@ export class PlayerService {
 
   initializeTable(hauteur: number, taille: number) {
     
-    this.actualPlayer = this.jeuxSubject.getValue().players.color1;
+    this.actualPlayer = this.jeuxSubject.getValue().players.color1; // ca c'est nouveau , c'est pour dire que la colour de départ est celle du joueur 1
     for (let i = 0; i < hauteur; i++) {
       this.grille[i] = [];
       for (let j = 0; j < taille; j++) {
@@ -43,7 +45,12 @@ export class PlayerService {
     }
   }
   placerPion(data: CaseData) {
-    console.log(this.grille);
+
+    const inf = this.jeuxSubject.getValue();
+    if(inf.terminee===true){
+      return;
+    }
+
     let j: number = data.colonne;
     let i: number = this.grille.length - 1
     while (i >= 0 && this.grille[i][j].couleur !== "white") {
@@ -51,6 +58,7 @@ export class PlayerService {
     }
     if (i >= 0) {
       this.grille[i][j].couleur = this.actualPlayer;
+      this.jeuxSubject.next({ gagnant: "", terminee: false, players: inf.players,nbrPions : inf.nbrPions-1  });
       this.verifierGagnant(i, j, this.actualPlayer);
       this.changerJoueur();
 
@@ -69,8 +77,14 @@ export class PlayerService {
   }
 
   verifierGagnant(ligne: number, colonne: number, couleur: string) {
+    const inf = this.jeuxSubject.getValue();
+    if(inf.nbrPions===0){
+      this.setGagnant("white"); // on passe white à la fonction pour dire qu'il y a égalite
+    }
     this.verifierHorizontale(ligne, colonne, couleur);
     this.verifierVerticale(ligne, colonne, couleur);
+    this.verifierDiagonaleDroite(ligne,colonne,couleur);
+    this.verifierDiagonaleGauche(ligne,colonne,couleur);
 
   }
 
@@ -105,6 +119,8 @@ export class PlayerService {
 
     }
 
+    
+
     if (alignement >= 4) {
       this.setGagnant(couleur);
     }
@@ -132,23 +148,118 @@ export class PlayerService {
 
   }
 
-  setGagnant(couleur: string) {
 
-    const inf = this.jeuxSubject.getValue();
+  verifierDiagonaleDroite(ligne: number, colonne: number, couleur: string) {
 
-    if (inf.players.color1 === couleur) {
-      this.jeuxSubject.next({ gagnant: inf.players.pseudo1, terminee: true, players: inf.players });
+    // on parcourt la diagonale des septs cases d'alignement possible en partant du bas de la grille et en remontant vers la droite
+  
+    let alignement: number = 0;
+    let debC : number = colonne - 3;
+    let finC : number = colonne + 3;
+    let debL : number = ligne + 3;
+    let finL : number = ligne - 3;
+
+    // on cherche un début et une fin pour la diagonale qui ne soient pas en dehors de la grille 
+    while(debL>= this.grille.length || debC < 0){
+      debL--;
+      debC++;
     }
-    else {
-      this.jeuxSubject.next({ gagnant: inf.players.pseudo2, terminee: true, players: inf.players });
+    while(finL<0 || finC>= this.grille[0].length){
+      finL++;
+      finC--;
+    }
+    
+   
+    console.log(debC,finC,debL,finL);
+
+    while (debL >= finL && debC<=finC && alignement < 4) {
+
+      if (this.grille[debL][debC].couleur === couleur) {
+        alignement++;
+      }
+      else {
+        alignement = 0
+      }
+
+      debC++;
+      debL--;
+
+    }
+
+    
+
+    if (alignement >= 4) {
+      this.setGagnant(couleur);
     }
 
 
   }
 
+  verifierDiagonaleGauche(ligne: number, colonne: number, couleur: string) {
+    // on parcourt la diagonale des septs cases d'alignement possible en partant du bas de la grille et en remontant vers la gauche
+    let alignement: number = 0;
+    let debC : number = colonne + 3;
+    let finC : number = colonne - 3;
+    let debL : number = ligne + 3;
+    let finL : number = ligne - 3;
+    // on cherche un début et une fin pour la diagonale qui ne soient pas en dehors de la grille 
+    while(debL>= this.grille.length || debC >= this.grille[0].length){
+      debL--;
+      debC--;
+    }
+    while(finL<0 || finC < 0){
+      finL++;
+      finC++;
+    }
+    
+   
+    console.log(debC,finC,debL,finL);
+    
+    while (debL >= finL && debC>=finC && alignement < 4) {
+
+      if (this.grille[debL][debC].couleur === couleur) {
+        alignement++;
+      }
+      else {
+        alignement = 0
+      }
+
+      debC--;
+      debL--;
+
+    }
+
+    
+
+    if (alignement >= 4) {
+      this.setGagnant(couleur);
+    }
+
+
+  }
+
+
+  setGagnant(couleur: string) {
+
+    const inf = this.jeuxSubject.getValue();
+    console.log(couleur);
+    if(couleur==="white"){
+      this.jeuxSubject.next({ gagnant: "egalite", terminee: true, players: inf.players, nbrPions : inf.nbrPions });
+    }
+    else{
+      if (inf.players.color1 === couleur) {
+        this.jeuxSubject.next({ gagnant: inf.players.pseudo1, terminee: true, players: inf.players, nbrPions : inf.nbrPions });
+      }
+      else {
+        this.jeuxSubject.next({ gagnant: inf.players.pseudo2, terminee: true, players: inf.players, nbrPions : inf.nbrPions });
+      }
+    }
+
+  }
+
   restart() {
     const inf = this.jeuxSubject.getValue();
-    this.jeuxSubject.next({ gagnant: "", terminee: false, players: inf.players });
+    this.jeuxSubject.next({ gagnant: "", terminee: false, players: inf.players,nbrPions : 42  });
 
     this.initializeTable(this.grille.length, this.grille[0].length);
     this.actualPlayer = inf.players.color1;
